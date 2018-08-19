@@ -24,20 +24,17 @@ public class SkipGramFinder {
 		// Split each word into its own element in an array based on spaces.
 		String[] words = sentence.split(" ");
 		
-		// Generate the skip grams.
-		boolean keepGoing = true;
-		for(int x = 0; keepGoing; x++) {
+		// Iterate through the array of words until we reach a point where attempting to
+		// complete a skip gram would result in an ArrayIndexOutOfBoundsException.
+		for(int x = 0; x + (k + 1) * (n - 1) < words.length; x++) {
 			int gramTracker = x;
 			String gramBuilder = "";
 			
 			for(int y = 0; y < n; y++) {
-				// Inner loop is used for tracking how many words we have added to the gram.
+				// The inner loop is used for adding words to each gram as well as for keeping
+				// track of how many have been added.
 				gramBuilder += words[gramTracker] + " ";
-				
-				if(gramTracker == words.length - 1)
-					keepGoing = false;
-				else
-					gramTracker += k + 1;
+				gramTracker += k + 1;
 			}
 			
 			skipGrams.add(gramBuilder);
